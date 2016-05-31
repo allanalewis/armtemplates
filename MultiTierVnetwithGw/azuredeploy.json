@@ -1,39 +1,120 @@
 {
-  "apiVersion": "[variables('apiVersion')]",
-  "type": "Microsoft.Network/virtualNetworks",
-  "name": "virtualNetworkName",
-  "location": "[resourceGroup().location]",
-  "properties": {
-    "addressSpace": {
-      "addressPrefixes": [
-        "[parameters('vnetAddressPrefix')]"
-      ]
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vnetName": {
+      "type": "string",
+      "defaultValue": "VNet1",
+      "metadata": {
+        "description": "VNet name"
+      }
     },
-    "subnets": [
-      {
-        "name": "FESubnetName",
-        "properties": {
-          "addressPrefix": "[parameters('FESubnetPrefix')]"
-        }
-      },
-      {
-        "name": "BESubnetName",
-        "properties": {
-          "addressPrefix": "[parameters('BESubnetPrefix')]"
-        }
-      },
-      {
-        "name": "EdgeSubnetName",
-        "properties": {
-          "addressPrefix": "[parameters('EdgeSubnetPrefix')]"
-        }
-      },
-      {
-        "name": "GatewaySubnet",
-        "properties": {
-          "addressPrefix": "[parameters('GatewaySubnetPrefix')]"
-        }
-      }      
-    ]
-  }
+    "vnetAddressPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.0/24",
+      "metadata": {
+        "description": "VNet Address prefix"
+      }
+    },
+    "FEVNetPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.0/28",
+      "metadata": {
+        "description": "Front End VNet Prefix"
+      }
+    },
+    "FEVNetName": {
+      "type": "string",
+      "defaultValue": "RG-FrontEndVNet",
+      "metadata": {
+        "description": "Front End VNet Name"
+      }
+    },
+    "BEVNetPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.16/28",
+      "metadata": {
+        "description": "Back End VNet  Prefix"
+      }
+    },
+    "BEVNetName": {
+      "type": "string",
+      "defaultValue": "RG-BackEndVNet",
+      "metadata": {
+        "description": "Back End VNet Name"
+      }
+    },
+    "EdgeVNetPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.32/28",
+      "metadata": {
+        "description": "Edge VNet  Prefix"
+      }
+    },
+    "EdgeVNetName": {
+      "type": "string",
+      "defaultValue": "RG-EdgeVNet",
+      "metadata": {
+        "description": "Edge VNet Name"
+      }
+    },
+    "GatewaySubnetPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.248/29",
+      "metadata": {
+        "description": "Gateway Subnet VNet  Prefix"
+      }
+    },
+    "GatewaySubnetName": {
+      "type": "string",
+      "defaultValue": "GatewaySubnet",
+      "metadata": {
+        "description": "GatewaySubnet VNet Name"
+      }
+    }
+  },
+  "variables": {
+    "apiVersion": "2015-06-15"
+  },
+  "resources": [
+    {
+      "apiVersion": "[variables('apiVersion')]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('vnetName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('vnetAddressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('FEVNetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('FEVNetPrefix')]"
+            }
+          },
+          {
+            "name": "[parameters('BEVNetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('BEVNetPrefix')]"
+            }
+          },
+          {
+            "name": "[parameters('EdgeVNetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('EdgeVNetPrefix')]"
+            }
+          },
+          {
+            "name": "[parameters('GatewaySubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('GatewaySubnetPrefix')]"
+            }
+          }
+        ]
+      }
+    }
+  ]
 }
