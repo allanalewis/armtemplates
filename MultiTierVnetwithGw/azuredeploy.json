@@ -1,0 +1,39 @@
+{
+  "apiVersion": "[variables('apiVersion')]",
+  "type": "Microsoft.Network/virtualNetworks",
+  "name": "virtualNetworkName",
+  "location": "[resourceGroup().location]",
+  "properties": {
+    "addressSpace": {
+      "addressPrefixes": [
+        "[parameters('vnetAddressPrefix')]"
+      ]
+    },
+    "subnets": [
+      {
+        "name": "FESubnetName",
+        "properties": {
+          "addressPrefix": "[parameters('FESubnetPrefix')]"
+        }
+      },
+      {
+        "name": "BESubnetName",
+        "properties": {
+          "addressPrefix": "[parameters('BESubnetPrefix')]"
+        }
+      },
+      {
+        "name": "EdgeSubnetName",
+        "properties": {
+          "addressPrefix": "[parameters('EdgeSubnetPrefix')]"
+        }
+      },
+      {
+        "name": "GatewaySubnet",
+        "properties": {
+          "addressPrefix": "[parameters('GatewaySubnetPrefix')]"
+        }
+      }      
+    ]
+  }
+}
