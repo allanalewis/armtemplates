@@ -1,22 +1,22 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "location":{ 
-    "type":"string", 
-    "metadata":{ 
-    "description":"The region to deploy the resources into" 
-    }, 
-    "defaultValue":"[resourceGroup().location]" 
-    },
-    "vnetName": {
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+       "location":{ 
+        "type":"string", 
+        "metadata":{ 
+          "description":"The region to deploy the resources into" 
+          }, 
+        "defaultValue":"[resourceGroup().location]" 
+      },
+      "vnetName": {
       "type": "string",
       "defaultValue": "VNet1",
       "metadata": {
         "description": "VNet name"
       }
     },
-    "vnetAddressPrefix": {
+     "vnetAddressPrefix": {
       "type": "string",
       "defaultValue": "10.0.0.0/24",
       "metadata": {
@@ -80,22 +80,23 @@
       }
     }
   },
-  "variables": {
-    "apiVersion": "2015-06-15"
-  },
-  "resources": [
-    {
-      "apiVersion": "[variables('apiVersion')]",
-      "type": "Microsoft.Network/virtualNetworks",
-      "name": "[parameters('vnetName')]",
-      "location": "[resourceGroup().location]",
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[parameters('vnetAddressPrefix')]"
-          ]
-        },
-        "subnets": [
+   
+    "variables": {
+      "apiVersion": "2015-06-15"
+    },
+    "resources": [
+     {
+        "apiVersion": "[variables('apiVersion')]",
+        "type": "Microsoft.Network/virtualNetworks",
+        "name": "[parameters('vnetName')]",
+        "location": "[resourceGroup().location]",
+        "properties": {
+          "addressSpace": {
+            "addressPrefixes": [
+              "[parameters('vnetAddressPrefix')]"
+            ]
+          },
+          "subnets": [
           {
             "name": "[parameters('FEVNetName')]",
             "properties": {
@@ -123,5 +124,5 @@
         ]
       }
     }
-  ]
+    ]
 }
