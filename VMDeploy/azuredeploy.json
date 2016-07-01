@@ -1,0 +1,215 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_dbserver_adminPassword": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "virtualMachines_dbserver_name": {
+            "defaultValue": "dbserver",
+            "type": "String"
+        },
+        "networkInterfaces_dbserver430_name": {
+            "defaultValue": "dbserver430",
+            "type": "String"
+        },
+        "networkSecurityGroups_rg1_dbserver_nsg_name": {
+            "defaultValue": "rg1-dbserver-nsg",
+            "type": "String"
+        },
+        "publicIPAddresses_rg1_dbserver_pubip_name": {
+            "defaultValue": "rg1-dbserver-pubip",
+            "type": "String"
+        },
+        "virtualNetworks_RG1_VNet1_name": {
+            "defaultValue": "RG1-VNet1",
+            "type": "String"
+        },
+        "storageAccounts_rg1stgact_name": {
+            "defaultValue": "rg1stgact",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/ca3db9d7-1423-4cb7-a00e-2d419fbb490b/resourceGroups/RG1/providers/Microsoft.Compute/virtualMachines/dbserver'.",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('virtualMachines_dbserver_name')]",
+            "apiVersion": "2015-06-15",
+            "location": "southeastasia",
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_A1"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "14.04.4-LTS",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "[parameters('virtualMachines_dbserver_name')]",
+                        "createOption": "FromImage",
+                        "vhd": {
+                            "uri": "[concat('https', '://', parameters('storageAccounts_rg1stgact_name'), '.blob.core.windows.net', concat('/vhds/', parameters('virtualMachines_dbserver_name'),'20166116124.vhd'))]"
+                        },
+                        "caching": "ReadWrite"
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_dbserver_name')]",
+                    "adminUsername": "[concat(parameters('virtualMachines_dbserver_name'),'-admin')]",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": false
+                    },
+                    "secrets": [],
+                    "adminPassword": "[parameters('virtualMachines_dbserver_adminPassword')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_dbserver430_name'))]"
+                        }
+                    ]
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_rg1stgact_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_dbserver430_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/ca3db9d7-1423-4cb7-a00e-2d419fbb490b/resourceGroups/RG1/providers/Microsoft.Network/networkInterfaces/dbserver430'.",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[parameters('networkInterfaces_dbserver430_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "southeastasia",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "10.0.0.4",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_rg1_dbserver_pubip_name'))]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_RG1_VNet1_name')), '/subnets/RG1-FrontEndVNet')]"
+                            }
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_rg1_dbserver_nsg_name'))]"
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_rg1_dbserver_pubip_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_RG1_VNet1_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_rg1_dbserver_nsg_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/ca3db9d7-1423-4cb7-a00e-2d419fbb490b/resourceGroups/RG1/providers/Microsoft.Network/networkSecurityGroups/rg1-dbserver-nsg'.",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[parameters('networkSecurityGroups_rg1_dbserver_nsg_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "southeastasia",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "default-allow-ssh",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1000,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/ca3db9d7-1423-4cb7-a00e-2d419fbb490b/resourceGroups/RG1/providers/Microsoft.Network/publicIPAddresses/rg1-dbserver-pubip'.",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('publicIPAddresses_rg1_dbserver_pubip_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "southeastasia",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/ca3db9d7-1423-4cb7-a00e-2d419fbb490b/resourceGroups/RG1/providers/Microsoft.Network/virtualNetworks/RG1-VNet1'.",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworks_RG1_VNet1_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "southeastasia",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.0.0.0/24"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "RG1-FrontEndVNet",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/28"
+                        }
+                    },
+                    {
+                        "name": "RG1-BackEndVNet",
+                        "properties": {
+                            "addressPrefix": "10.0.0.16/28"
+                        }
+                    },
+                    {
+                        "name": "RG1-EdgeVNet",
+                        "properties": {
+                            "addressPrefix": "10.0.0.32/28"
+                        }
+                    },
+                    {
+                        "name": "GatewaySubnet",
+                        "properties": {
+                            "addressPrefix": "10.0.0.248/29"
+                        }
+                    }
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/ca3db9d7-1423-4cb7-a00e-2d419fbb490b/resourceGroups/rg1/providers/Microsoft.Storage/storageAccounts/rg1stgact'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[parameters('storageAccounts_rg1stgact_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "southeastasia",
+            "tags": {},
+            "properties": {},
+            "dependsOn": []
+        }
+    ]
+}
