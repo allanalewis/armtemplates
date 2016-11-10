@@ -29,7 +29,7 @@
           "UK South",
           "UK West",
           "West Central US",
-          "West US 2",
+          "West US 2"
         ], 
         "metadata":{ 
           "description":"The region to deploy the resources into" 
