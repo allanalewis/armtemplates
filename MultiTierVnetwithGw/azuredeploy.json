@@ -33,7 +33,7 @@
         ], 
         "metadata":{ 
           "description":"The region to deploy the resources into" 
-          },        
+          }        
       },
       "vnetName": {
       "type": "string",
@@ -49,70 +49,70 @@
         "description": "VNet Address prefix"
       }
     },
-    "FEVNetPrefix": {
+    "FESubnetPrefix": {
       "type": "string",
       "defaultValue": "10.0.0.0/28",
       "metadata": {
-        "description": "Front End VNet Prefix"
+        "description": "Front End Subnet Prefix"
       }
     },
-    "FEVNetName": {
+    "FESubnetName": {
       "type": "string",
-      "defaultValue": "RG-FrontEndVNet",
+      "defaultValue": "RG-FrontEndSubnet",
       "metadata": {
-        "description": "Front End VNet Name"
+        "description": "Front End Subnet Name"
       }
     },
-    "BEVNetPrefix": {
+    "BESubnetPrefix": {
       "type": "string",
       "defaultValue": "10.0.0.16/28",
       "metadata": {
-        "description": "Back End VNet  Prefix"
+        "description": "Back End Subnet  Prefix"
       }
     },
-    "BEVNetName": {
+    "BESubnetName": {
       "type": "string",
-      "defaultValue": "RG-BackEndVNet",
+      "defaultValue": "RG-BackEndSubnet",
       "metadata": {
-        "description": "Back End VNet Name"
+        "description": "Back End Subnet Name"
       }
     },
-    "EdgeVNetPrefix": {
+    "EdgeSubnetPrefix": {
       "type": "string",
       "defaultValue": "10.0.0.32/28",
       "metadata": {
-        "description": "Edge VNet  Prefix"
+        "description": "Edge Subnet  Prefix"
       }
     },
-    "EdgeVNetName": {
+    "EdgeSubnetName": {
       "type": "string",
-      "defaultValue": "RG-EdgeVNet",
+      "defaultValue": "RG-EdgeSubnet",
       "metadata": {
-        "description": "Edge VNet Name"
+        "description": "Edge Subnet Name"
       }
     },
     "GatewaySubnetPrefix": {
       "type": "string",
       "defaultValue": "10.0.0.248/29",
       "metadata": {
-        "description": "Gateway Subnet VNet  Prefix"
+        "description": "Gateway Subnet Prefix"
       }
     },
     "GatewaySubnetName": {
       "type": "string",
       "defaultValue": "GatewaySubnet",
       "metadata": {
-        "description": "GatewaySubnet VNet Name"
+        "description": "GatewaySubnet Name"
       }
     }
   },
    
     "variables": {
-      "apiVersion": "2015-06-15"
+      
     },
     "resources": [
      {
-        "apiVersion": "[variables('apiVersion')]",
+        "apiVersion": "2017-06-01",
         "type": "Microsoft.Network/virtualNetworks",
         "name": "[parameters('vnetName')]",
         "location": "[resourceGroup().location]",
@@ -124,21 +124,21 @@
           },
           "subnets": [
           {
-            "name": "[parameters('FEVNetName')]",
+            "name": "[parameters('FESubnetName')]",
             "properties": {
-              "addressPrefix": "[parameters('FEVNetPrefix')]"
+              "addressPrefix": "[parameters('FESubnetPrefix')]"
             }
           },
           {
-            "name": "[parameters('BEVNetName')]",
+            "name": "[parameters('BESubnetName')]",
             "properties": {
-              "addressPrefix": "[parameters('BEVNetPrefix')]"
+              "addressPrefix": "[parameters('BESubnetPrefix')]"
             }
           },
           {
-            "name": "[parameters('EdgeVNetName')]",
+            "name": "[parameters('EdgeSubnetName')]",
             "properties": {
-              "addressPrefix": "[parameters('EdgeVNetPrefix')]"
+              "addressPrefix": "[parameters('EdgeSubnetPrefix')]"
             }
           },
           {
