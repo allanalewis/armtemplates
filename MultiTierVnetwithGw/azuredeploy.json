@@ -91,6 +91,20 @@
         "description": "Edge Subnet Name"
       }
     },
+    "NewSubnetPrefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.48/28",
+      "metadata": {
+        "description": "New Subnet  Prefix"
+      }
+    },
+    "NewSubnetName": {
+      "type": "string",
+      "defaultValue": "RG-NewSubnet",
+      "metadata": {
+        "description": "New Subnet Name"
+      }
+    },
     "GatewaySubnetPrefix": {
       "type": "string",
       "defaultValue": "10.0.0.248/29",
@@ -139,6 +153,12 @@
             "name": "[parameters('EdgeSubnetName')]",
             "properties": {
               "addressPrefix": "[parameters('EdgeSubnetPrefix')]"
+            }
+          },
+          {
+            "name": "[parameters('NewSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('NewSubnetPrefix')]"
             }
           },
           {
