@@ -44,14 +44,14 @@
     },
      "vnetAddressPrefix": {
       "type": "string",
-      "defaultValue": "10.0.0.0/24",
+      "defaultValue": "10.1.0.0/24",
       "metadata": {
         "description": "VNet Address prefix"
       }
     },
     "FESubnetPrefix": {
       "type": "string",
-      "defaultValue": "10.0.0.0/28",
+      "defaultValue": "10.1.0.0/28",
       "metadata": {
         "description": "Front End Subnet Prefix"
       }
@@ -65,7 +65,7 @@
     },
     "BESubnetPrefix": {
       "type": "string",
-      "defaultValue": "10.0.0.16/28",
+      "defaultValue": "10.1.0.16/28",
       "metadata": {
         "description": "Back End Subnet  Prefix"
       }
@@ -79,7 +79,7 @@
     },   
     "NewSubnetPrefix": {
       "type": "string",
-      "defaultValue": "10.0.0.48/28",
+      "defaultValue": "10.1.0.48/28",
       "metadata": {
         "description": "New Subnet  Prefix"
       }
@@ -93,7 +93,7 @@
     },
     "GatewaySubnetPrefix": {
       "type": "string",
-      "defaultValue": "10.0.0.248/29",
+      "defaultValue": "10.1.0.248/29",
       "metadata": {
         "description": "Gateway Subnet Prefix"
       }
