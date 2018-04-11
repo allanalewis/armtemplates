@@ -76,21 +76,7 @@
       "metadata": {
         "description": "Back End Subnet Name"
       }
-    },
-    "EdgeSubnetPrefix": {
-      "type": "string",
-      "defaultValue": "10.0.0.32/28",
-      "metadata": {
-        "description": "Edge Subnet  Prefix"
-      }
-    },
-    "EdgeSubnetName": {
-      "type": "string",
-      "defaultValue": "RG-EdgeSubnet",
-      "metadata": {
-        "description": "Edge Subnet Name"
-      }
-    },
+    },   
     "NewSubnetPrefix": {
       "type": "string",
       "defaultValue": "10.0.0.48/28",
@@ -147,12 +133,6 @@
             "name": "[parameters('BESubnetName')]",
             "properties": {
               "addressPrefix": "[parameters('BESubnetPrefix')]"
-            }
-          },
-          {
-            "name": "[parameters('EdgeSubnetName')]",
-            "properties": {
-              "addressPrefix": "[parameters('EdgeSubnetPrefix')]"
             }
           },
           {
