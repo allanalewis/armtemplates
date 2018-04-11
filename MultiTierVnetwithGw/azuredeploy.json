@@ -58,7 +58,7 @@
     },
     "FESubnetName": {
       "type": "string",
-      "defaultValue": "RG-FrontEndSubnet",
+      "defaultValue": "RG-FESubnet",
       "metadata": {
         "description": "Front End Subnet Name"
       }
@@ -72,7 +72,7 @@
     },
     "BESubnetName": {
       "type": "string",
-      "defaultValue": "RG-BackEndSubnet",
+      "defaultValue": "RG-BESubnet",
       "metadata": {
         "description": "Back End Subnet Name"
       }
